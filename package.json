@@ -1,0 +1,39 @@
+{
+  "name": "Phaser3ES6Webpack",
+  "version": "1.0.0",
+  "description": "",
+  "author": "niklas berg <me@niklasberg.se>",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack",
+    "deploy": "webpack --config webpack.production.config.js",
+    "test": "eslint ./src/**/**.js"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "browser-sync": "^2.23.6",
+    "browser-sync-webpack-plugin": "^1.2.0",
+    "clean-webpack-plugin": "^0.1.17",
+    "copy-webpack-plugin": "^4.5.0",
+    "eslint": "^4.18.2",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "expose-loader": "^0.7.4",
+    "file-loader": "^1.1.11",
+    "html-webpack-plugin": "^2.30.1",
+    "raw-loader": "^0.5.1",
+    "webpack": "^3.11.0"
+  },
+  "dependencies": {
+    "phaser": "^3.1.0",
+    "phaser-animated-tiles": "^1.0.0"
+  }
+}
