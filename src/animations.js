@@ -11,7 +11,7 @@ export default function makeAnimations(scene) {
 
   scene.anims.create({
     key: 'up',
-    frames: scene.anims.generateFrameNames('player', { start: 7, end: 4 }),
+    frames: scene.anims.generateFrameNames('player', { start: 12, end: 16 }),
     ...defaultConfig,
   });
 
@@ -29,7 +29,7 @@ export default function makeAnimations(scene) {
 
   scene.anims.create({
     key: 'left',
-    frames: scene.anims.generateFrameNames('player', { start: 1, end: 4 }),
+    frames: scene.anims.generateFrameNames('player', { start: 8, end: 11 }),
     ...defaultConfig,
   });
 }
