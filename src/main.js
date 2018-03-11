@@ -13,15 +13,14 @@ const config = {
   backgroundColor: '#000000',
   parent: 'content',
   physics: {
-    default: 'arcade',
-    arcade: {
+    default: 'matter',
+    matter: {
       debug: true,
-      // gravity: { y: 200 },
+      gravity: {
+        y: 0,
+        x: 0,
+      },
     },
-    // matter: {
-    //   debug: true,
-    //   gravity: { y: 0.5 },
-    // },
   },
   scene: [Preload, Example1, Example2, Example3],
 };
