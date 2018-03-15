@@ -1,18 +1,10 @@
 import Player from '../player';
-// import player from '../assets/pokeball.png';
-// import platform from '../assets/platform.png';
 import makeAnimations from '../animations';
 
 class Example1 extends Phaser.Scene {
   constructor() {
     super({
       key: 'Example1',
-      physics: {
-        matter: {
-          debug: true,
-          // gravity: { y: 0.5 },
-        },
-      },
     });
 
     this.player = null;
@@ -25,15 +17,6 @@ class Example1 extends Phaser.Scene {
     this.wallsLayer = this.map.createStaticLayer('walls', this.tileset, 0, 0);
 
     this.groundLayer.setCollision(-1); // don't collide with anything from groundLayer and will collide with any other layer
-
-    // this.groundLayer.setCollisionByProperty({ collide: true });
-    // this.wallsLayer.setCollisionByProperty({ collide: true });
-    // console.log(this);
-    // this.matter.world.convertTilemapLayer(this.groundLayer);
-    // this.matter.world.convertTilemapLayer(this.wallsLayer);
-
-    // this.matter.world.setBounds(this.map.widthInPixels, this.map.heightInPixels);
-    this.matter.world.createDebugGraphic();
 
     this.map.getObjectLayer('player').objects.map((player) => {
       this.player = new Player({

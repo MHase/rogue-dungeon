@@ -10,7 +10,7 @@ class Bullet extends Phaser.GameObjects.Text {
   }
 
   fire(gun) {
-    this.speed = 300;
+    this.speed = 200;
 
     this.setActive(true);
     this.setVisible(true);
@@ -32,7 +32,6 @@ class Bullet extends Phaser.GameObjects.Text {
   }
 
   hit() {
-    console.log('boom!');
     this.hide();
   }
 }
