@@ -8,8 +8,10 @@ import {
 
 const config = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
+  width: window.innerWidth,
+  height: window.innerHeight,
+  // width: 800,
+  // height: 600,
   backgroundColor: '#000000',
   parent: 'content',
   physics: {
