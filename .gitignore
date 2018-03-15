@@ -8,6 +8,8 @@
 /dist
 
 # misc
+/src.old
+/assets
 .DS_Store
 .env.local
 .env.development.local
