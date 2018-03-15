@@ -1,5 +1,5 @@
 import player from '../assets/pokeball.png';
-// import platform from '../assets/platform.png';
+import bullet from '../assets/bullet.png';
 
 import map from '../assets/tilemaps/testMap.json';
 import tileset from '../assets/tileset.png';
@@ -11,6 +11,7 @@ class Preload extends Phaser.Scene {
 
   preload() {
     this.load.spritesheet('player', player, { frameWidth: 12, frameHeight: 12 });
+    this.load.image('bullet', bullet);
 
     this.load.tilemapTiledJSON('map', map);
     this.load.image('tiles', tileset);
