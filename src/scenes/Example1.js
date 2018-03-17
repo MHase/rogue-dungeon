@@ -1,4 +1,5 @@
 import Player from '../sprites/Player';
+import Enemy from '../sprites/Enemy';
 import makeAnimations from '../utils/animations';
 
 class Example1 extends Phaser.Scene {
@@ -28,14 +29,34 @@ class Example1 extends Phaser.Scene {
       return null;
     });
 
+    this.map.getObjectLayer('enemies').objects.map((enemy) => {
+      this.enemy = new Enemy({
+        scene: this,
+        key: 'player',
+        x: enemy.x,
+        y: enemy.y,
+      });
+      return null;
+    });
+
     // setInterval(() => {
-    //   console.log('timeout'); // uset setinterval to spawn enemies
+    //   console.log('timeout'); // use setinterval to spawn enemies
     // }, 3000);
 
     makeAnimations(this);
 
-    this.physics.add.collider(this.player, this.groundLayer);
-    this.physics.add.collider(this.player, this.wallsLayer);
+    this.physics.add.collider([this.player, this.enemy], this.groundLayer);
+    this.physics.add.collider(this.player, this.enemy);
+    this.physics.add.collider(
+      this.player.bullets,
+      this.enemy,
+      (enemy, bullet) => {
+        console.log(enemy);
+        bullet.hit();
+      },
+      null,
+      this,
+    );
   }
 
   update() {
