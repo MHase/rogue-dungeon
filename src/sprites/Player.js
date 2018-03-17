@@ -1,10 +1,9 @@
-import Bullet from './bullet';
+import Bullet from './Bullet';
 
 class Player extends Phaser.GameObjects.Sprite {
   constructor(config) {
     super(config.scene, config.x, config.y, config.key);
     this.scene = config.scene;
-    this.key = config.key;
     config.scene.physics.world.enable(this);
     this.scene.add.existing(this);
 
@@ -17,7 +16,7 @@ class Player extends Phaser.GameObjects.Sprite {
   }
 
   create() {
-    this.body.setCollideWorldBounds(true);
+    // this.body.setCollideWorldBounds(true); // we can add it, but our bounds are within tilemap
     this.scene.cameras.main.startFollow(this);
     this.scene.cameras.main.zoom = 2;
     this.scene.input.scale = 0.5;
@@ -53,12 +52,6 @@ class Player extends Phaser.GameObjects.Sprite {
       D: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
       W: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
     };
-  }
-
-  update() {
-    this.movement(this.keys);
-    this.animations();
-    this.redraw(this.line);
     this.scene.physics.add.collider(
       this.bullets,
       this.scene.groundLayer,
@@ -66,6 +59,12 @@ class Player extends Phaser.GameObjects.Sprite {
       null,
       this.scene,
     );
+  }
+
+  update() {
+    this.movement(this.keys);
+    this.animations();
+    this.redraw(this.line);
   }
 
   handleBulletHit(bullet, tile) {
