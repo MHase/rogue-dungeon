@@ -1,5 +1,5 @@
-import Player from '../player';
-import makeAnimations from '../animations';
+import Player from '../sprites/Player';
+import makeAnimations from '../utils/animations';
 
 class Example1 extends Phaser.Scene {
   constructor() {
@@ -28,15 +28,11 @@ class Example1 extends Phaser.Scene {
       return null;
     });
 
-    makeAnimations(this);
+    // setInterval(() => {
+    //   console.log('timeout'); // uset setinterval to spawn enemies
+    // }, 3000);
 
-    // setting keys
-    this.keys = {
-      A: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
-      S: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
-      D: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
-      W: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
-    };
+    makeAnimations(this);
 
     this.physics.add.collider(this.player, this.groundLayer);
     this.physics.add.collider(this.player, this.wallsLayer);

@@ -36,20 +36,27 @@ class Player extends Phaser.GameObjects.Sprite {
       this.angle = parseInt(angle, 10);
     });
 
+    // on mouse click get bullet and fire it in desired direction
     this.scene.input.on('pointerdown', () => {
       const bullet = this.bullets.get();
 
       if (bullet) {
-        // const offset = new Phaser.Geom.Point(0, -this.height / 2);
-        const offset = 0;
-        Phaser.Math.Rotate(offset, this.angle);
+        Phaser.Math.Rotate(0, this.angle);
         bullet.fire(this);
       }
     });
+
+    // setting keys
+    this.keys = {
+      A: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
+      S: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
+      D: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
+      W: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
+    };
   }
 
-  update(keys) {
-    this.movement(keys);
+  update() {
+    this.movement(this.keys);
     this.animations();
     this.redraw(this.line);
     this.scene.physics.add.collider(
