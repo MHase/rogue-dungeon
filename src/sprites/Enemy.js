@@ -5,6 +5,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
     config.scene.physics.world.enable(this);
     this.scene.add.existing(this);
 
+    this.tint = 0xFF0000;
     // this.create();
   }
 
