@@ -1,6 +1,7 @@
 import Player from '../sprites/Player';
 import Enemy from '../sprites/Enemy';
 import makeAnimations from '../utils/animations';
+import Client from '../client';
 
 class Example1 extends Phaser.Scene {
   constructor() {
@@ -19,14 +20,32 @@ class Example1 extends Phaser.Scene {
 
     this.groundLayer.setCollision(-1); // don't collide with anything from groundLayer and will collide with any other layer
 
-    this.map.getObjectLayer('player').objects.map((player) => {
+    this.map.getObjectLayer('player').objects.map(() => {
       this.player = new Player({
         scene: this,
         key: 'player',
-        x: player.x,
-        y: player.y,
+        x: 100,
+        y: 100,
+        // x: player.x,
+        // y: player.y,
       });
       return null;
+    });
+
+    Client.socket.on('newplayer', (data) => {
+      console.log('adding new player');
+      this.player[data.id] = new Player({
+        scene: this,
+        key: 'player',
+        x: data.x,
+        y: data.y,
+      });
+      console.log(data.id, this, this.data.id);
+      // (data.id,data.x,data.y);
+    });
+
+    Client.socket.on('remove', (id) => {
+      this.removePlayer(id);
     });
 
     this.map.getObjectLayer('enemies').objects.map((enemy) => {
@@ -61,6 +80,12 @@ class Example1 extends Phaser.Scene {
 
   update() {
     this.player.update(this.keys);
+  }
+
+  removePlayer(id) {
+    this.player[id].destroy();
+    console.log('player disconnected', id);
+    // delete Game.playerMap[id];
   }
 }
 
