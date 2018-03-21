@@ -24,8 +24,8 @@ module.exports = {
   devtool: 'cheap-source-map',
   output: {
     pathinfo: true,
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: './dist/',
+    path: path.resolve(__dirname, 'build'),
+    publicPath: './build/',
     filename: 'bundle.js',
   },
   watch: true,
@@ -85,11 +85,11 @@ module.exports = {
       },
     ],
   },
-  // node: {
-  //   fs: 'empty',
-  //   net: 'empty',
-  //   tls: 'empty',
-  // },
+  node: {
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+  },
   // resolve: {
   //   alias: {
   //     phaser,

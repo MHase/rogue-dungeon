@@ -5,8 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // Phaser webpack config
-const phaserModule = path.join(__dirname, '/node_modules/phaser/');
-const phaser = path.join(phaserModule, 'src/phaser.js');
+// const phaserModule = path.join(__dirname, '/node_modules/phaser/');
+// const phaser = path.join(phaserModule, 'src/phaser.js');
 
 const definePlugin = new webpack.DefinePlugin({
   __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'false')),
@@ -41,7 +41,7 @@ module.exports = {
     }), */
     new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' /* chunkName= */, filename: 'js/vendor.bundle.js' /* filename= */ }),
     new HtmlWebpackPlugin({
-      filename: 'index.html', // path.resolve(__dirname, 'build', 'index.html'),
+      filename: 'index.html', // path.resolve(__dirname, 'dist', 'index.html'),
       template: './src/index.html',
       chunks: ['vendor', 'app'],
       chunksSortMode: 'manual',
@@ -66,6 +66,16 @@ module.exports = {
       { test: /\.js$/, use: ['babel-loader'], include: path.join(__dirname, 'src') },
       { test: /phaser-split\.js$/, use: 'raw-loader' },
       { test: [/\.vert$/, /\.frag$/], use: 'raw-loader' },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        exclude: [/node_modules/, path.resolve('src/fonts')],
+        loader: 'file-loader?name=[path][name].[ext]',
+      },
+      {
+        test: /\.(mp3|oog|wmv|json)$/,
+        exclude: /node_modules/,
+        loader: 'file-loader?name=[path][name].[ext]',
+      },
     ],
   },
   node: {
@@ -73,9 +83,9 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
   },
-  resolve: {
-    alias: {
-      phaser,
-    },
-  },
+  // resolve: {
+  //   alias: {
+  //     phaser,
+  //   },
+  // },
 };
