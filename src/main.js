@@ -5,7 +5,6 @@ import {
   Example2,
   Example3,
 } from './scenes';
-import Client from './client';
 
 const config = {
   type: Phaser.AUTO,
@@ -23,7 +22,5 @@ const config = {
 };
 
 const game = new Phaser.Game(config);
-
-Client.askNewPlayer();
 
 export default game;

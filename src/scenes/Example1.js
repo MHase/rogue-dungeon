@@ -10,6 +10,7 @@ class Example1 extends Phaser.Scene {
     });
 
     this.player = null;
+    this.players = {};
   }
 
   create() {
@@ -20,28 +21,29 @@ class Example1 extends Phaser.Scene {
 
     this.groundLayer.setCollision(-1); // don't collide with anything from groundLayer and will collide with any other layer
 
-    this.map.getObjectLayer('player').objects.map(() => {
+    this.map.getObjectLayer('player').objects.map((player) => {
+      Client.askNewPlayer({ x: player.x, y: player.y });
       this.player = new Player({
         scene: this,
         key: 'player',
-        x: 100,
-        y: 100,
+        x: player.x,
+        y: player.y,
         // x: player.x,
         // y: player.y,
       });
       return null;
     });
 
-    Client.socket.on('newplayer', (data) => {
-      console.log('adding new player');
-      this.player[data.id] = new Player({
-        scene: this,
-        key: 'player',
-        x: data.x,
-        y: data.y,
+    Client.socket.on('allplayers', (data) => {
+      console.log('scene || loading all players', data);
+      data.map((player) => {
+        this.addPlayer(player);
+        return null;
       });
-      console.log(data.id, this, this.data.id);
-      // (data.id,data.x,data.y);
+    });
+
+    Client.socket.on('newplayer', (data) => {
+      this.addPlayer(data);
     });
 
     Client.socket.on('remove', (id) => {
@@ -64,18 +66,20 @@ class Example1 extends Phaser.Scene {
 
     makeAnimations(this);
 
-    this.physics.add.collider([this.player, this.enemy], this.groundLayer);
-    this.physics.add.collider(this.player, this.enemy);
-    this.physics.add.collider(
-      this.player.bullets,
-      this.enemy,
-      (enemy, bullet) => {
-        console.log(enemy);
-        bullet.hit();
-      },
-      null,
-      this,
-    );
+    // this.physics.add.collider([this.player, this.enemy], this.groundLayer);
+    // this.physics.add.collider(this.player, this.enemy);
+    // this.physics.add.collider(
+    //   this.player.bullets,
+    //   this.enemy,
+    //   (enemy, bullet) => {
+    //     console.log(enemy);
+    //     bullet.hit();
+    //   },
+    //   null,
+    //   this,
+    // );
+
+    // Client.askNewPlayer();
   }
 
   update() {
@@ -83,9 +87,19 @@ class Example1 extends Phaser.Scene {
   }
 
   removePlayer(id) {
-    this.player[id].destroy();
+    this.players[id].destroy();
+    delete this.players[id];
     console.log('player disconnected', id);
-    // delete Game.playerMap[id];
+  }
+
+  addPlayer(player) {
+    console.log('mmm adding player', player);
+    this.players[player.id] = new Player({
+      scene: this,
+      key: 'player',
+      x: player.x,
+      y: player.y,
+    });
   }
 }
 
