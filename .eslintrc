@@ -26,7 +26,8 @@
     "import/no-extraneous-dependencies": 0,
     "no-unused-expressions": ["warn", { "allowShortCircuit": true, "allowTernary": true }],
     "curly": [0],
-    "class-methods-use-this": [0]
+    "class-methods-use-this": [0],
+    "no-param-reassign": [0]
   },
   "globals": {
     "Phaser": true
