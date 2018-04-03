@@ -32,7 +32,8 @@ class Player extends Phaser.GameObjects.Sprite {
     });
 
     this.scene.input.on('pointermove', (pointer) => {
-      const angle = ((Math.atan2(pointer.y, pointer.x) * 180) / Math.PI); // my player change position all the time with movement, so center of caemra is the same positiosn ans player's
+      const angle = ((Math.atan2(pointer.y - this.y, pointer.x - this.x) * 180) / Math.PI);
+      // const angle = ((Math.atan2(pointer.y, pointer.x) * 180) / Math.PI); // my player change position all the time with movement, so center of caemra is the same positiosn ans player's
       // const angle = ((Math.atan2(pointer.y - this.cameraCenter.y, pointer.x - this.cameraCenter.x) * 180) / Math.PI); // my player change position all the time with movement, so center of caemra is the same positiosn ans player's
       this.angle = parseInt(angle, 10);
     });
