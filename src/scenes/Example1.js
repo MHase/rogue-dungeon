@@ -10,7 +10,7 @@ class Example1 extends Phaser.Scene {
     });
 
     this.player = null;
-    this.players = {};
+    this.players = [];
   }
 
   create() {
@@ -23,13 +23,12 @@ class Example1 extends Phaser.Scene {
 
     this.map.getObjectLayer('player').objects.map((player) => {
       Client.askNewPlayer({ x: player.x, y: player.y });
+      // this.players[player.id] = new Player({
       this.player = new Player({
         scene: this,
         key: 'player',
         x: player.x,
         y: player.y,
-        // x: player.x,
-        // y: player.y,
       });
       return null;
     });
@@ -80,13 +79,27 @@ class Example1 extends Phaser.Scene {
     // );
 
     // Client.askNewPlayer();
+    Client.socket.on('updatePlayer', (data) => {
+      // console.log(data.player);
+      if (this.players[data.id]) {
+        this.players[data.id].x = data.player.x;
+        this.players[data.id].y = data.player.y;
+      }
+      return null;
+    });
   }
 
   update() {
-    this.player.update(this.keys);
+    this.player.update();
+    // this.players.getChildren().update();
+    // this.players.map(singlePlayer => singlePlayer.update());
   }
 
   removePlayer(id) {
+    const playerIndex = this.players.indexOf(id);
+    if (playerIndex > -1) {
+      this.players.splice(playerIndex, 1);
+    }
     this.players[id].destroy();
     delete this.players[id];
     console.log('player disconnected', id);
@@ -100,6 +113,7 @@ class Example1 extends Phaser.Scene {
       x: player.x,
       y: player.y,
     });
+    console.log(this.players);
   }
 }
 

@@ -25,8 +25,7 @@ function getAllPlayers(id) {
   const players = [];
   Object.keys(io.sockets.connected).forEach((socketID) => {
     const player = io.sockets.connected[socketID].player; // eslint-disable-line
-    // if (player && player.id !== id) players.push(player);
-    if (player) players.push(player);
+    if (player && player.id !== id) players.push(player);
   });
   console.log('server || running allPlayers', players);
   return players;
@@ -43,6 +42,16 @@ io.on('connection', (socket) => {
     socket.emit('allplayers', getAllPlayers(socket.player.id));
     socket.broadcast.emit('newplayer', socket.player); // sends a message to all connected sockets, except the socket who triggered the callback
     console.log('new player connected', socket.player.id);
+
+    socket.on('move', (coords) => {
+      socket.player.x = coords.x;
+      socket.player.y = coords.y;
+      console.log('moving', coords);
+    });
+
+    socket.on('update', (data) => {
+      socket.broadcast.emit('updatePlayer', { player: data, id: socket.player.id });
+    });
 
     socket.on('disconnect', () => {
       io.emit('remove', socket.player.id);
