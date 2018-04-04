@@ -65,18 +65,18 @@ class Example1 extends Phaser.Scene {
 
     makeAnimations(this);
 
-    // this.physics.add.collider([this.player, this.enemy], this.groundLayer);
-    // this.physics.add.collider(this.player, this.enemy);
-    // this.physics.add.collider(
-    //   this.player.bullets,
-    //   this.enemy,
-    //   (enemy, bullet) => {
-    //     console.log(enemy);
-    //     bullet.hit();
-    //   },
-    //   null,
-    //   this,
-    // );
+    this.physics.add.collider([this.player, this.enemy], this.groundLayer);
+    this.physics.add.collider(this.player, this.enemy);
+    this.physics.add.collider(
+      this.player.bullets,
+      this.enemy,
+      (enemy, bullet) => {
+        console.log(enemy);
+        bullet.hit();
+      },
+      null,
+      this,
+    );
 
     // Client.askNewPlayer();
     Client.socket.on('updatePlayer', (data) => {
@@ -87,6 +87,10 @@ class Example1 extends Phaser.Scene {
       }
       return null;
     });
+
+    this.cameras.main.startFollow(this.player);
+    this.cameras.main.zoom = 2;
+    this.input.scale = 0.5;
   }
 
   update() {

@@ -21,9 +21,6 @@ class Player extends Phaser.GameObjects.Sprite {
 
   create() {
     // this.body.setCollideWorldBounds(true); // we can add it, but our bounds are within tilemap
-    // this.scene.cameras.main.startFollow(this);
-    // this.scene.cameras.main.zoom = 2;
-    this.scene.input.scale = 0.5;
 
     this.bullets = this.scene.physics.add.group({
       classType: Bullet,
@@ -32,9 +29,9 @@ class Player extends Phaser.GameObjects.Sprite {
     });
 
     this.scene.input.on('pointermove', (pointer) => {
-      const angle = ((Math.atan2(pointer.y - this.y, pointer.x - this.x) * 180) / Math.PI);
+      // const angle = ((Math.atan2(pointer.y - this.y, pointer.x - this.x) * 180) / Math.PI);
       // const angle = ((Math.atan2(pointer.y, pointer.x) * 180) / Math.PI); // my player change position all the time with movement, so center of caemra is the same positiosn ans player's
-      // const angle = ((Math.atan2(pointer.y - this.cameraCenter.y, pointer.x - this.cameraCenter.x) * 180) / Math.PI); // my player change position all the time with movement, so center of caemra is the same positiosn ans player's
+      const angle = ((Math.atan2(pointer.y - this.cameraCenter.y, pointer.x - this.cameraCenter.x) * 180) / Math.PI); // my player change position all the time with movement, so center of caemra is the same positiosn ans player's
       this.angle = parseInt(angle, 10);
     });
 
