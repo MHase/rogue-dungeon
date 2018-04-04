@@ -15,7 +15,7 @@ class Player extends Phaser.GameObjects.Sprite {
       x: this.scene.cameras.main.width / 2,
     };
     this.controls = new Keyboard(this);
-    console.log(this.controls);
+    this.angle = 0;
     this.create();
   }
 
@@ -27,6 +27,22 @@ class Player extends Phaser.GameObjects.Sprite {
       maxSize: 20,
       runChildUpdate: true,
     });
+
+
+    // setting keys
+    // this.keys = {
+    //   A: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
+    //   S: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
+    //   D: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
+    //   W: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
+    // };
+    this.scene.physics.add.collider(
+      this.bullets,
+      this.scene.groundLayer,
+      this.handleBulletHit,
+      null,
+      this.scene,
+    );
 
     this.scene.input.on('pointermove', (pointer) => {
       // const angle = ((Math.atan2(pointer.y - this.y, pointer.x - this.x) * 180) / Math.PI);
@@ -44,25 +60,10 @@ class Player extends Phaser.GameObjects.Sprite {
         bullet.fire(this);
       }
     });
-
-    // setting keys
-    // this.keys = {
-    //   A: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
-    //   S: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
-    //   D: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
-    //   W: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
-    // };
-    this.scene.physics.add.collider(
-      this.bullets,
-      this.scene.groundLayer,
-      this.handleBulletHit,
-      null,
-      this.scene,
-    );
   }
 
   update() {
-    this.movement(this.keys);
+    this.movement();
     this.animations();
     Client.socket.emit('update', this);
 
@@ -71,24 +72,11 @@ class Player extends Phaser.GameObjects.Sprite {
   }
 
   handleBulletHit(bullet, tile) {
-    console.log(tile); // remove!
+    console.log(bullet, tile); // remove!
     bullet.hit();
   }
 
   movement() {
-    // if (keys.A.isDown) {
-    //   this.body.setVelocityX(-100);
-    // } else if (keys.D.isDown) {
-    //   this.body.setVelocityX(100);
-    // } else {
-    //   this.body.setVelocityX(0);
-    // }
-    //
-    // if (keys.S.isDown) {
-    //   this.body.setVelocityY(100);
-    // } else if (keys.W.isDown) {
-    //   this.body.setVelocityY(-100);
-    // } else this.body.setVelocityY(0);
     this.controls.update();
   }
 

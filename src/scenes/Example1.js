@@ -49,6 +49,14 @@ class Example1 extends Phaser.Scene {
       this.removePlayer(id);
     });
 
+    Client.socket.on('updatePlayer', (data) => {
+      if (this.players[data.id]) {
+        this.players[data.id].x = data.player.x;
+        this.players[data.id].y = data.player.y;
+      }
+      return null;
+    });
+
     this.map.getObjectLayer('enemies').objects.map((enemy) => {
       this.enemy = new Enemy({
         scene: this,
@@ -77,16 +85,6 @@ class Example1 extends Phaser.Scene {
       null,
       this,
     );
-
-    // Client.askNewPlayer();
-    Client.socket.on('updatePlayer', (data) => {
-      // console.log(data.player);
-      if (this.players[data.id]) {
-        this.players[data.id].x = data.player.x;
-        this.players[data.id].y = data.player.y;
-      }
-      return null;
-    });
 
     this.cameras.main.startFollow(this.player);
     this.cameras.main.zoom = 2;
