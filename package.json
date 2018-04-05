@@ -1,13 +1,13 @@
 {
-  "name": "Rogue Dungeon",
+  "name": "rogue-dungeon",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
+    "postinstall": "npm install && npm run deploy",
     "dev": "webpack",
     "deploy": "webpack --config webpack.production.config.js",
-    "test": "eslint ./src/**/**.js",
-    "start": "node server.js",
-    "postinstall": "npm install && npm run deploy"
+    "test": "eslint ./src/**/**.js"
   },
   "license": "MIT",
   "devDependencies": {
