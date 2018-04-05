@@ -24,8 +24,6 @@ class Player extends Phaser.GameObjects.Sprite {
 
     this.bullets = this.scene.physics.add.group({
       classType: Bullet,
-      maxSize: 20,
-      runChildUpdate: true,
     });
 
 
@@ -53,12 +51,9 @@ class Player extends Phaser.GameObjects.Sprite {
 
     // on mouse click get bullet and fire it in desired direction
     this.scene.input.on('pointerdown', () => {
-      const bullet = this.bullets.get();
-
-      if (bullet) {
-        Phaser.Math.Rotate(0, this.angle);
-        bullet.fire(this);
-      }
+      const bullet = new Bullet(this.scene);
+      this.bullets.add(bullet);
+      bullet.fire(this);
     });
   }
 

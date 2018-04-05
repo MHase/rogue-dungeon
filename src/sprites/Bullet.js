@@ -5,9 +5,11 @@ class Bullet extends Phaser.GameObjects.Image {
     Phaser.GameObjects.Image.call(this, scene, 0, 0, 'bullet');
 
     scene.physics.world.enable(this);
+    this.scene.add.existing(this);
     this.setScale(0.5);
 
     this.speed = 200;
+    console.log('bullet.created');
   }
 
   fire(gun) {
@@ -27,7 +29,8 @@ class Bullet extends Phaser.GameObjects.Image {
   }
 
   hit() {
-    this.hide();
+    // this.hide();
+    this.destroy();
   }
 }
 
