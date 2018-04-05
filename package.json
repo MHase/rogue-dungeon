@@ -1,9 +1,7 @@
 {
-  "name": "Phaser3ES6Webpack",
+  "name": "Rogue Dungeon",
   "version": "1.0.0",
-  "description": "",
-  "author": "niklas berg <me@niklasberg.se>",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "dev": "webpack",
     "deploy": "webpack --config webpack.production.config.js",
