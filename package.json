@@ -1,7 +1,7 @@
 {
   "name": "Rogue Dungeon",
   "version": "1.0.0",
-  "main": "main.js",
+  "main": "server.js",
   "scripts": {
     "dev": "webpack",
     "deploy": "webpack --config webpack.production.config.js",
