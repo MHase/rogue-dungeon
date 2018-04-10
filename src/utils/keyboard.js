@@ -3,31 +3,32 @@ import game from '../main';
 class PlayerKeyboard {
   constructor(player) {
     this.player = player;
-    // this.keys = {
-    //   A: game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
-    //   S: game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
-    //   D: game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
-    //   W: game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
-    // };
+    // game.input.keyboard.createCursorKeys()
+    // creates object with keys codes as follows:
+    // 16: true | shift
+    // 32: true | spacebar
+    // 37: true | left arrow
+    // 38: true | up arrow
+    // 39: true | right arrow
+    // 40: true | down arrow
+    // so we have to disable every other input exept arrows
     this.cursors = game.input.keyboard.createCursorKeys();
+    game.input.keyboard.removeKeyCapture(16);
+    game.input.keyboard.removeKeyCapture(32);
   }
 
   update() {
     if (this.cursors.left.isDown) {
-    // if (this.keys.A.isDown) {
       this.player.body.setVelocityX(-100);
     } else if (this.cursors.right.isDown) {
-    // } else if (this.keys.D.isDown) {
       this.player.body.setVelocityX(100);
     } else {
       this.player.body.setVelocityX(0);
     }
 
     if (this.cursors.down.isDown) {
-    // if (this.keys.S.isDown) {
       this.player.body.setVelocityY(100);
     } else if (this.cursors.up.isDown) {
-    // } else if (this.keys.W.isDown) {
       this.player.body.setVelocityY(-100);
     } else this.player.body.setVelocityY(0);
   }
