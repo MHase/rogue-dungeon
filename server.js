@@ -50,7 +50,11 @@ io.on('connection', (socket) => {
     });
 
     socket.on('update', (data) => {
-      socket.broadcast.emit('updatePlayer', { player: data, id: socket.player.id });
+      socket.broadcast.emit('updatePlayer', {
+        player: data.player,
+        animation: data.animation,
+        id: socket.player.id,
+      });
     });
 
     socket.on('chatMessage', (message) => {

@@ -50,9 +50,14 @@ class Example1 extends Phaser.Scene {
     });
 
     Client.socket.on('updatePlayer', (data) => {
+      console.log(this.players[data.id]);
       if (this.players[data.id]) {
         this.players[data.id].x = data.player.x;
         this.players[data.id].y = data.player.y;
+        if (this.players[data.id].animation !== data.animation) {
+          this.players[data.id].animation = data.animation;
+          this.players[data.id].anims.play(data.animation);
+        }
       }
       return null;
     });

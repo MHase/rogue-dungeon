@@ -16,6 +16,7 @@ class Player extends Phaser.GameObjects.Sprite {
     };
     this.controls = new Keyboard(this);
     this.angle = 0;
+    this.animation = 'stand';
     this.create();
   }
 
@@ -58,9 +59,13 @@ class Player extends Phaser.GameObjects.Sprite {
   }
 
   update() {
-    this.movement();
+    this.controls.update();
     this.animations();
-    Client.socket.emit('update', this);
+    this.anims.play(this.animation, true);
+    Client.socket.emit('update', {
+      player: this,
+      animation: this.animation,
+    });
 
     if (this.body.velocity.x !== 0 || this.body.velocity.y !== 0)
       Client.socket.emit('move', { x: this.body.x, y: this.body.y });
@@ -71,21 +76,17 @@ class Player extends Phaser.GameObjects.Sprite {
     bullet.hit();
   }
 
-  movement() {
-    this.controls.update();
-  }
-
   animations() {
     if (this.body.velocity.x === 0 && this.body.velocity.y === 0)
-      this.anims.play('stand');
+      this.animation = 'stand';
     if (this.body.velocity.x > 0 && (this.body.velocity.y >= 0 || this.body.velocity.y < 0))
-      this.anims.play('right', true);
+      this.animation = 'right';
     if (this.body.velocity.x < 0 && (this.body.velocity.y >= 0 || this.body.velocity.y < 0))
-      this.anims.play('left', true);
+      this.animation = 'left';
     if (this.body.velocity.x === 0 && this.body.velocity.y > 0)
-      this.anims.play('down', true);
+      this.animation = 'down';
     if (this.body.velocity.x === 0 && this.body.velocity.y < 0)
-      this.anims.play('up', true);
+      this.animation = 'up';
   }
 }
 

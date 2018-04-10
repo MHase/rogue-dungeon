@@ -27,6 +27,16 @@ const config = {
 
 const game = new Phaser.Game(config);
 
+game.onBlur(() => {
+  game.input.enabled = false;
+  console.log('keyboard disabled');
+});
+
+game.onFocus(() => {
+  game.input.enabled = true;
+  console.log('keyboard enabled');
+});
+
 $('form').submit((e) => {
   e.preventDefault();
   const inputValue = $('.chat__input');
