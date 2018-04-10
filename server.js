@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-server.listen(process.env.PORT || 8081, () => { // Listens to port 8081
+server.listen(8081, () => { // Listens to port 8081
   console.log('Listening on', server.address().port);
 });
 
@@ -51,6 +51,11 @@ io.on('connection', (socket) => {
 
     socket.on('update', (data) => {
       socket.broadcast.emit('updatePlayer', { player: data, id: socket.player.id });
+    });
+
+    socket.on('chatMessage', (message) => {
+      console.log('server received and send -', message);
+      io.emit('chatMessageInsert', message);
     });
 
     socket.on('disconnect', () => {
