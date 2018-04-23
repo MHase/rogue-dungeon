@@ -9,11 +9,11 @@ class Player extends Phaser.GameObjects.Sprite {
     config.scene.physics.world.enable(this);
     this.scene.add.existing(this);
 
-    this.life = 100;
-    this.cameraCenter = {
-      y: this.scene.cameras.main.height / 2,
-      x: this.scene.cameras.main.width / 2,
-    };
+    this.score = 0;
+    // this.cameraCenter = {
+    //   y: this.scene.cameras.main.height / 2,
+    //   x: this.scene.cameras.main.width / 2,
+    // };
     this.controls = new Keyboard(this);
     this.angle = 0;
     this.animation = 'stand';
