@@ -1,6 +1,7 @@
 import Player from '../sprites/Player';
 import Enemy from '../sprites/Enemy';
 import makeAnimations from '../utils/animations';
+import getArrayRandomly from '../utils/getArrayRandomly';
 import Client from '../client';
 
 class Example1 extends Phaser.Scene {
@@ -11,6 +12,7 @@ class Example1 extends Phaser.Scene {
 
     this.player = null;
     this.players = [];
+    this.rubies = null;
   }
 
   create() {
@@ -30,6 +32,14 @@ class Example1 extends Phaser.Scene {
         x: player.x,
         y: player.y,
       });
+      return null;
+    });
+
+    this.rubies = this.physics.add.group();
+    getArrayRandomly(this.map.getObjectLayer('stars').objects).map((ruby, index) => {
+      setTimeout(() => {
+        this.rubies.create(ruby.x, ruby.y, 'ruby').setScale(0.5);
+      }, (index + 1) * 2000);
       return null;
     });
 
@@ -80,20 +90,30 @@ class Example1 extends Phaser.Scene {
 
     this.physics.add.collider([this.player, this.enemy], this.groundLayer);
     this.physics.add.collider(this.player, this.enemy);
+    // this.physics.add.collider(
+    //   this.player.bullets,
+    //   this.enemy,
+    //   (enemy, bullet) => {
+    //     console.log(enemy);
+    //     bullet.hit();
+    //   },
+    //   null,
+    //   this,
+    // );
     this.physics.add.collider(
-      this.player.bullets,
-      this.enemy,
-      (enemy, bullet) => {
-        console.log(enemy);
-        bullet.hit();
+      this.rubies,
+      this.player,
+      (player, ruby) => {
+        player.score += 10;
+        ruby.destroy();
       },
       null,
       this,
     );
 
     this.cameras.main.startFollow(this.player);
-    this.cameras.main.zoom = 2;
-    this.input.scale = 0.5;
+    this.cameras.main.zoom = 2.5;
+    // this.input.scale = 0.5;
   }
 
   update() {
