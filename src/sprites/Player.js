@@ -27,14 +27,6 @@ class Player extends Phaser.GameObjects.Sprite {
       classType: Bullet,
     });
 
-
-    // setting keys
-    // this.keys = {
-    //   A: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
-    //   S: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
-    //   D: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
-    //   W: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
-    // };
     this.scene.physics.add.collider(
       this.bullets,
       this.scene.groundLayer,
@@ -43,19 +35,18 @@ class Player extends Phaser.GameObjects.Sprite {
       this.scene,
     );
 
-    this.scene.input.on('pointermove', (pointer) => {
-      // const angle = ((Math.atan2(pointer.y - this.y, pointer.x - this.x) * 180) / Math.PI);
-      // const angle = ((Math.atan2(pointer.y, pointer.x) * 180) / Math.PI); // my player change position all the time with movement, so center of caemra is the same positiosn ans player's
-      const angle = ((Math.atan2(pointer.y - this.cameraCenter.y, pointer.x - this.cameraCenter.x) * 180) / Math.PI); // my player change position all the time with movement, so center of caemra is the same positiosn ans player's
-      this.angle = parseInt(angle, 10);
-    });
+    // LINES RESPONSIBLE FOR TURNING ANG FIRING BULLETS
+    // this.scene.input.on('pointermove', (pointer) => {
+    //   const angle = ((Math.atan2(pointer.y - this.cameraCenter.y, pointer.x - this.cameraCenter.x) * 180) / Math.PI); // my player change position all the time with movement, so center of caemra is the same positiosn ans player's
+    //   this.angle = parseInt(angle, 10);
+    // });
 
     // on mouse click get bullet and fire it in desired direction
-    this.scene.input.on('pointerdown', () => {
-      const bullet = new Bullet(this.scene);
-      this.bullets.add(bullet);
-      bullet.fire(this);
-    });
+    // this.scene.input.on('pointerdown', () => {
+    //   const bullet = new Bullet(this.scene);
+    //   this.bullets.add(bullet);
+    //   bullet.fire(this);
+    // });
   }
 
   update() {
