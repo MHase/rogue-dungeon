@@ -1,5 +1,5 @@
 import Player from '../sprites/Player';
-import Enemy from '../sprites/Enemy';
+// import Enemy from '../sprites/Enemy';
 import makeAnimations from '../utils/animations';
 import getArrayRandomly from '../utils/getArrayRandomly';
 import Client from '../client';
@@ -13,6 +13,9 @@ class Example1 extends Phaser.Scene {
     this.player = null;
     this.players = [];
     this.rubies = null;
+    this.gameStatus = null;
+    this.gameStatusText = 'Waiting for another player';
+    this.collectSound = null;
   }
 
   create() {
@@ -34,6 +37,13 @@ class Example1 extends Phaser.Scene {
       });
       return null;
     });
+
+    this.gameStatus = this.add.text(
+      this.player.x,
+      this.player.y,
+      this.gameStatusText,
+      { fontFamily: 'Arial', fontSize: 14 },
+    );
 
     this.rubies = this.physics.add.group();
     getArrayRandomly(this.map.getObjectLayer('stars').objects).map((ruby, index) => {
@@ -72,24 +82,22 @@ class Example1 extends Phaser.Scene {
       return null;
     });
 
-    this.map.getObjectLayer('enemies').objects.map((enemy) => {
-      this.enemy = new Enemy({
-        scene: this,
-        key: 'player',
-        x: enemy.x,
-        y: enemy.y,
-      });
-      return null;
-    });
-
-    // setInterval(() => {
-    //   console.log('timeout'); // use setinterval to spawn enemies
-    // }, 3000);
+    this.collectSound = this.sound.add('collectRuby', { loop: false });
+    // this.map.getObjectLayer('enemies').objects.map((enemy) => {
+    //   this.enemy = new Enemy({
+    //     scene: this,
+    //     key: 'player',
+    //     x: enemy.x,
+    //     y: enemy.y,
+    //   });
+    //   return null;
+    // });
 
     makeAnimations(this);
 
-    this.physics.add.collider([this.player, this.enemy], this.groundLayer);
-    this.physics.add.collider(this.player, this.enemy);
+    this.physics.add.collider(this.player, this.groundLayer);
+    // this.physics.add.collider([this.player, this.enemy], this.groundLayer);
+    // this.physics.add.collider(this.player, this.enemy);
     // this.physics.add.collider(
     //   this.player.bullets,
     //   this.enemy,
@@ -104,6 +112,7 @@ class Example1 extends Phaser.Scene {
       this.rubies,
       this.player,
       (player, ruby) => {
+        this.collectSound.play();
         player.score += 10;
         ruby.destroy();
       },
@@ -112,14 +121,14 @@ class Example1 extends Phaser.Scene {
     );
 
     this.cameras.main.startFollow(this.player);
-    this.cameras.main.zoom = 2.5;
+    this.cameras.main.zoom = 2;
     // this.input.scale = 0.5;
   }
 
   update() {
     this.player.update();
-    // this.players.getChildren().update();
-    // this.players.map(singlePlayer => singlePlayer.update());
+    this.gameStatus.x = this.player.x + (this.player.width / 2);
+    this.gameStatus.y = this.player.y + (this.player.height / 2);
   }
 
   removePlayer(id) {
