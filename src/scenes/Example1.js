@@ -70,7 +70,7 @@ class Example1 extends Phaser.Scene {
     });
 
     Client.socket.on('updatePlayer', (data) => {
-      console.log(this.players[data.id]);
+      // console.log(this.players[data.id]);
       if (this.players[data.id]) {
         this.players[data.id].x = data.player.x;
         this.players[data.id].y = data.player.y;
@@ -132,13 +132,12 @@ class Example1 extends Phaser.Scene {
   }
 
   removePlayer(id) {
-    const playerIndex = this.players.indexOf(id);
-    if (playerIndex > -1) {
-      this.players.splice(playerIndex, 1);
+    if (this.players[id]) {
+      this.players[id].destroy();
+      this.players.splice(id, 1);
     }
-    this.players[id].destroy();
-    delete this.players[id];
     console.log('player disconnected', id);
+    console.log(this.players);
   }
 
   addPlayer(player) {
