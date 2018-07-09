@@ -1,8 +1,7 @@
-import game from '../main';
-
 class PlayerKeyboard {
-  constructor(player) {
+  constructor(player, scene) {
     this.player = player;
+    this.scene = scene;
     // game.input.keyboard.createCursorKeys()
     // creates object with keys codes as follows:
     // 16: true | shift
@@ -12,9 +11,9 @@ class PlayerKeyboard {
     // 39: true | right arrow
     // 40: true | down arrow
     // so we have to disable every other input exept arrows
-    this.cursors = game.input.keyboard.createCursorKeys();
-    game.input.keyboard.removeKeyCapture(16);
-    game.input.keyboard.removeKeyCapture(32);
+    this.cursors = scene.input.keyboard.createCursorKeys();
+    scene.input.keyboard.removeKey(16);
+    scene.input.keyboard.removeKey(32);
   }
 
   update() {

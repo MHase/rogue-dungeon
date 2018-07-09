@@ -15,7 +15,7 @@ class Preload extends Phaser.Scene {
     this.load.spritesheet('player', player, { frameWidth: 12, frameHeight: 12 });
     this.load.image('bullet', bullet);
     this.load.image('ruby', ruby);
-    this.load.audioSprite('collectRuby', collect);
+    this.load.audio('collectRuby', collect);
 
     this.load.tilemapTiledJSON('map', map);
     this.load.image('tiles', tileset);

@@ -14,7 +14,7 @@ class Player extends Phaser.GameObjects.Sprite {
     //   y: this.scene.cameras.main.height / 2,
     //   x: this.scene.cameras.main.width / 2,
     // };
-    this.controls = new Keyboard(this);
+    this.controls = new Keyboard(this, this.scene);
     this.angle = 0;
     this.animation = 'stand';
     this.create();
