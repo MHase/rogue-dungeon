@@ -18,16 +18,18 @@ server.listen(process.env.PORT || 8081, () => { // gives us any avaiable port pr
   console.log('Listening on', server.address().port);
 });
 
-server.lastPlayerID = 0; // Keep track of the last id assigned to a new player
+server.lastPlayerID = -1; // Keep track of the last id assigned to a new player
+// start counting from 0, so our array won't be empty at the beggining
 
 function getAllPlayers(id) {
   console.log(id);
   const players = [];
-  Object.keys(io.sockets.connected).forEach((socketID) => {
+  Object.keys(io.sockets.connected).map((socketID) => {
     const player = io.sockets.connected[socketID].player; // eslint-disable-line
-    if (player && player.id !== id) players.push(player);
+    if (player) players.push(player);
+    return null;
   });
-  console.log('server || running allPlayers', players);
+  console.log('server || running allPlayers\n', players);
   return players;
 }
 
@@ -41,12 +43,11 @@ io.on('connection', (socket) => {
 
     socket.emit('allplayers', getAllPlayers(socket.player.id));
     socket.broadcast.emit('newplayer', socket.player); // sends a message to all connected sockets, except the socket who triggered the callback
-    console.log('new player connected', socket.player.id);
+    console.log('new player connected with id:', socket.player.id);
 
     socket.on('move', (coords) => {
       socket.player.x = coords.x;
       socket.player.y = coords.y;
-      console.log('moving', coords);
     });
 
     socket.on('update', (data) => {
